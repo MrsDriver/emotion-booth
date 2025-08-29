@@ -65,12 +65,12 @@
             <!-- Save Instructions -->
             <div class="mt-6 bg-sky-100 border border-sky-200 text-sky-800 rounded-lg p-4 max-w-2xl mx-auto">
                 <h3 class="font-bold text-lg">How to Save Your Collage</h3>
-                <p class="mt-1">Click the button below to open your collage. Then, **tap and hold** on the image and choose **"Add to Photos"** or **"Save Image"**.</p>
+                <p class="mt-1">Click the button below. On an iPad, the image will open in a new tab. **Tap and hold** on the image and choose **"Add to Photos"**.</p>
             </div>
 
             <div class="mt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
-                 <a id="save-btn" class="bg-sky-500 text-white font-bold py-3 px-8 rounded-lg hover:bg-sky-600 shadow-md w-full sm:w-auto cursor-pointer fun-btn text-xl" target="_blank">
-                    Open Collage to Save
+                 <a id="save-btn" class="bg-sky-500 text-white font-bold py-3 px-8 rounded-lg hover:bg-sky-600 shadow-md w-full sm:w-auto cursor-pointer fun-btn text-xl" target="_blank" download="emotion-collage.png">
+                    Download Collage
                 </a>
                 <button id="restart-btn" class="bg-orange-400 text-white font-bold py-3 px-8 rounded-lg hover:bg-orange-500 shadow-md w-full sm:w-auto fun-btn text-xl">
                     Start Over
@@ -228,7 +228,7 @@
                 ctx.fillStyle = 'black';
 
                 emotions.forEach((emotion, index) => {
-                    const img = new Image();
+                    const img = new new Image();
                     img.src = capturedPhotos[emotion];
                     img.onload = () => {
                         const col = index % cols;
