@@ -5,40 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Emotion Photo Booth</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Nunito', sans-serif;
         }
         /* Custom styles for the camera and buttons */
         .snapshot-preview {
-            border: 2px solid #4ade80; /* green-400 */
+            border: 3px solid #84cc16; /* lime-500 */
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         .emotion-card.completed {
-            background-color: #dcfce7; /* green-100 */
-            border-color: #4ade80; /* green-400 */
+            background-color: #ecfccb; /* lime-100 */
+            border-color: #84cc16; /* lime-500 */
+        }
+        .fun-btn {
+            transition: all 0.2s ease-in-out;
+        }
+        .fun-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
         }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-800 flex items-center justify-center min-h-screen p-4">
+<body class="bg-sky-50 text-gray-800 flex items-center justify-center min-h-screen p-4">
 
     <div id="app-container" class="w-full max-w-5xl mx-auto bg-white rounded-2xl shadow-xl p-6 md:p-8">
         
         <header class="text-center mb-6">
-            <h1 class="text-3xl md:text-4xl font-bold text-gray-900">Emotion Photo Booth</h1>
-            <p id="instructions" class="text-gray-600 mt-2">Let's capture your emotions! Use your camera to take a photo for each feeling below.</p>
+            <h1 class="text-4xl md:text-5xl font-extrabold text-teal-500">Emotion Photo Booth</h1>
+            <p id="instructions" class="text-gray-600 mt-2 text-lg">Let's capture your emotions! Use your camera to take a photo for each feeling below.</p>
         </header>
 
         <!-- Camera and Main Controls -->
         <div id="camera-section" class="mb-8 text-center">
             <div id="camera-placeholder" class="bg-gray-200 rounded-lg h-64 w-full max-w-lg mx-auto flex items-center justify-center text-gray-500 mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 3a2 2 o 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" /></svg>
                 Camera is loading...
             </div>
             <video id="video" class="hidden rounded-lg w-full max-w-lg mx-auto shadow-md" autoplay playsinline></video>
             <canvas id="captureCanvas" class="hidden"></canvas>
-            <button id="start-camera" class="bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-indigo-700 transition-colors shadow-md">
+            <button id="start-camera" class="bg-teal-500 text-white font-bold py-3 px-8 rounded-lg hover:bg-teal-600 shadow-md fun-btn text-xl">
                 Start Camera
             </button>
         </div>
@@ -50,25 +59,22 @@
 
         <!-- Collage Section -->
         <div id="collage-section" class="hidden text-center mt-8">
-            <h2 class="text-2xl font-bold mb-4">Your Emotion Collage!</h2>
+            <h2 class="text-3xl font-bold mb-4 text-teal-500">Your Emotion Collage!</h2>
             <canvas id="collageCanvas" class="w-full rounded-lg shadow-lg border-2 border-gray-200"></canvas>
-            <div class="mt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
-                 <a id="download-btn" class="bg-green-500 text-white font-semibold py-3 px-8 rounded-lg hover:bg-green-600 transition-colors shadow-md w-full sm:w-auto cursor-pointer">
-                    Download Collage
+            
+            <!-- Save Instructions -->
+            <div class="mt-6 bg-sky-100 border border-sky-200 text-sky-800 rounded-lg p-4 max-w-2xl mx-auto">
+                <h3 class="font-bold text-lg">How to Save Your Collage</h3>
+                <p class="mt-1">Click the button below to open your collage. Then, **tap and hold** on the image and choose **"Add to Photos"** or **"Save Image"**.</p>
+            </div>
+
+            <div class="mt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+                 <a id="save-btn" class="bg-sky-500 text-white font-bold py-3 px-8 rounded-lg hover:bg-sky-600 shadow-md w-full sm:w-auto cursor-pointer fun-btn text-xl" target="_blank">
+                    Open Collage to Save
                 </a>
-                <button id="restart-btn" class="bg-gray-500 text-white font-semibold py-3 px-8 rounded-lg hover:bg-gray-600 transition-colors shadow-md w-full sm:w-auto">
+                <button id="restart-btn" class="bg-orange-400 text-white font-bold py-3 px-8 rounded-lg hover:bg-orange-500 shadow-md w-full sm:w-auto fun-btn text-xl">
                     Start Over
                 </button>
-            </div>
-           
-            <!-- Email submission section -->
-            <div class="mt-8 p-6 bg-gray-50 rounded-lg border border-gray-200 text-left max-w-2xl mx-auto">
-                <h3 class="font-bold text-lg mb-2">Submit to Your Teacher</h3>
-                <p class="text-gray-600 mb-4">First, download your collage. Then, click the "Send Email" button to open your email app and attach the downloaded file.</p>
-                <div class="flex flex-col sm:flex-row gap-3">
-                    <input type="email" value="hannah.driver@pps.school.nz" class="flex-grow p-2 border border-gray-300 rounded-md bg-gray-200" readonly>
-                    <a href="mailto:hannah.driver@pps.school.nz?subject=My Emotion Collage" class="bg-indigo-600 text-white text-center font-semibold p-2 rounded-md hover:bg-indigo-700 transition-colors">Send Email</a>
-                </div>
             </div>
         </div>
     </div>
@@ -94,7 +100,7 @@
             const emotionGrid = document.getElementById('emotion-grid');
             const cameraSection = document.getElementById('camera-section');
             const collageSection = document.getElementById('collage-section');
-            const downloadBtn = document.getElementById('download-btn');
+            const saveBtn = document.getElementById('save-btn');
             const restartBtn = document.getElementById('restart-btn');
             const instructions = document.getElementById('instructions');
             const cameraPlaceholder = document.getElementById('camera-placeholder');
@@ -122,7 +128,7 @@
                              <span class="text-gray-400 text-sm">No Photo</span>
                         </div>
                         <h3 class="font-bold text-lg mb-3">${emotion}</h3>
-                        <button data-emotion="${emotion}" class="take-photo-btn w-full bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors shadow">
+                        <button data-emotion="${emotion}" class="take-photo-btn w-full bg-yellow-400 text-gray-800 font-bold py-2 px-4 rounded-lg hover:bg-yellow-500 transition-colors shadow fun-btn">
                             Take Photo
                         </button>
                     `;
@@ -140,15 +146,12 @@
                     if (stream) {
                         stream.getTracks().forEach(track => track.stop());
                     }
-                    // --- UPDATED CODE ---
-                    // Explicitly ask for the front-facing camera
                     const videoConstraints = {
                         width: { ideal: 640 },
                         height: { ideal: 480 },
                         facingMode: 'user' 
                     };
                     stream = await navigator.mediaDevices.getUserMedia({ video: videoConstraints, audio: false });
-                    // --- END OF UPDATE ---
 
                     video.srcObject = stream;
                     video.classList.remove('hidden');
@@ -160,8 +163,6 @@
                     console.error("Error accessing camera: ", err);
                     cameraPlaceholder.innerHTML = 'Could not access the camera. Please check permissions and try again.';
                     
-                    // --- UPDATED ERROR MESSAGE ---
-                    // Provide more specific instructions for iPad users
                     errorMessage.innerHTML = `Could not access the camera. Please try these steps:
                         <ul class="list-disc list-inside text-left mt-4">
                             <li>Ensure you grant permission when the browser asks.</li>
@@ -169,7 +170,6 @@
                             <li>This feature requires a secure (https://) connection.</li>
                         </ul>
                         <p class="mt-2 text-sm text-gray-500">Error: ${err.name}</p>`;
-                    // --- END OF UPDATE ---
                     errorModal.classList.remove('hidden');
                 }
             };
@@ -179,7 +179,6 @@
                 const emotion = e.target.dataset.emotion;
                 if (!emotion) return;
 
-                // 1. Capture the image
                 const context = captureCanvas.getContext('2d');
                 captureCanvas.width = video.videoWidth;
                 captureCanvas.height = video.videoHeight;
@@ -188,7 +187,6 @@
                 const dataUrl = captureCanvas.toDataURL('image/png');
                 capturedPhotos[emotion] = dataUrl;
 
-                // 2. Update the UI
                 const previewContainer = document.getElementById(`preview-${emotion}`);
                 previewContainer.innerHTML = `<img src="${dataUrl}" alt="${emotion}" class="w-full h-full object-cover rounded-md snapshot-preview">`;
                 
@@ -196,10 +194,9 @@
                 card.classList.add('completed');
 
                 e.target.textContent = 'Retake';
-                e.target.classList.remove('bg-blue-500', 'hover:bg-blue-600');
-                e.target.classList.add('bg-yellow-500', 'hover:bg-yellow-600');
+                e.target.classList.remove('bg-yellow-400', 'hover:bg-yellow-500');
+                e.target.classList.add('bg-orange-400', 'hover:bg-orange-500', 'text-white');
 
-                // 3. Check if all photos are taken
                 if (Object.keys(capturedPhotos).length === emotions.length) {
                     createCollage();
                 }
@@ -226,7 +223,7 @@
                 ctx.fillStyle = 'white';
                 ctx.fillRect(0, 0, collageCanvas.width, collageCanvas.height);
 
-                ctx.font = 'bold 16px Inter';
+                ctx.font = 'bold 18px Nunito';
                 ctx.textAlign = 'center';
                 ctx.fillStyle = 'black';
 
@@ -243,14 +240,13 @@
                         // Draw image
                         ctx.drawImage(img, x, y, photoWidth, photoHeight);
                         
-                        // Draw text
+                        // Draw text with the expression under the image
                         ctx.fillText(emotion, x + photoWidth / 2, y + photoHeight + 25);
                     };
                 });
                 
-                // Set download link
-                downloadBtn.href = collageCanvas.toDataURL('image/png');
-                downloadBtn.download = 'emotion-collage.png';
+                // Set save link
+                saveBtn.href = collageCanvas.toDataURL('image/png');
             };
 
             // Reset the application to its initial state
