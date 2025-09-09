@@ -227,6 +227,9 @@
                 ctx.textAlign = 'center';
                 ctx.fillStyle = 'black';
 
+                let imagesLoaded = 0;
+                const totalImages = emotions.length;
+
                 emotions.forEach((emotion, index) => {
                     const img = new Image();
                     img.src = capturedPhotos[emotion];
@@ -242,11 +245,14 @@
                         
                         // Draw text with the expression under the image
                         ctx.fillText(emotion, x + photoWidth / 2, y + photoHeight + 25);
+
+                        imagesLoaded++;
+                        // Once all images are loaded and drawn, set the save link
+                        if (imagesLoaded === totalImages) {
+                             saveBtn.href = collageCanvas.toDataURL('image/png');
+                        }
                     };
                 });
-                
-                // Set save link
-                saveBtn.href = collageCanvas.toDataURL('image/png');
             };
 
             // Reset the application to its initial state
