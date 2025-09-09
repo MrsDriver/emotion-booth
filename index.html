@@ -228,7 +228,7 @@
                 ctx.fillStyle = 'black';
 
                 emotions.forEach((emotion, index) => {
-                    const img = new new Image();
+                    const img = new Image();
                     img.src = capturedPhotos[emotion];
                     img.onload = () => {
                         const col = index % cols;
@@ -281,3 +281,4 @@
     </script>
 </body>
 </html>
+```eof
